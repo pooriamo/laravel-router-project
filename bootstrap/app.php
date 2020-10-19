@@ -61,6 +61,7 @@ $app->singleton(
 
 $app->configure('app');
 $app->configure('route-map');
+$app->configure('cors');
 
 /*
 |--------------------------------------------------------------------------
@@ -73,9 +74,9 @@ $app->configure('route-map');
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
+$app->middleware([
+    Fruitcake\Cors\HandleCors::class,
+]);
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
@@ -96,6 +97,7 @@ $app->routeMiddleware([
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+$app->register(Fruitcake\Cors\CorsServiceProvider::class);
 
 
 

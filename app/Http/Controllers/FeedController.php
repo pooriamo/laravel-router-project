@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Feed;
 use App\Models\Hashtag;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class FeedController extends Controller
 {
@@ -21,7 +20,7 @@ class FeedController extends Controller
     }
 
     public function index() {
-        return Feed::all();
+        return Feed::with('hashtags')->get();
     }
 
     public function indexByHashtag($hashtag) {
@@ -29,6 +28,11 @@ class FeedController extends Controller
     }
 
     public function store(Request $request) {
+        $this->validate($request, [
+            'title' => 'required',
+            'content'   => 'required'
+        ]);
+
         $feed = Feed::create([
             'title' => $request->input('title'),
             'content'   => $request->input('content')

@@ -66,12 +66,6 @@ $router->post('login', 'AuthController@login');
 $router->post('logout', 'AuthController@logout');
 
 $any('/{route:.*}', function (Request $request) {
-    if (!$request->isJson()) {
-        return response()->json([
-           'message'    => 'only json is accepted'
-        ], 400);
-    }
-
     // find the actual host for this path
     $path = map($request->path());
 
